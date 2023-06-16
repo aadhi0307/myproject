@@ -1,0 +1,98 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="{% static 'userlog/css/user.css' %}">
+    <title>Document</title>
+</head>
+<body>
+
+
+  <div class="wrapper">
+
+      <div class="title-text">
+        <div class="title login">Login Form</div>
+        <div class="title signup">Signup Form</div>
+      </div>
+      <div class="form-container">
+        <div class="slide-controls">
+          <input type="radio" name="slide" id="login" checked>
+          <input type="radio" name="slide" id="signup">
+          <label for="login" class="slide login">Login</label>
+          <label for="signup" class="slide signup">Signup</label>
+          <div class="slider-tab"></div>
+        </div>
+        <div class="form-inner">
+          <form  class="login" method="post" action="{% url 'usersignin' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+
+            <div class="field">
+              <input type="text" placeholder="Username" required name="name">
+            </div>
+            <div class="field">
+              <input type="password" placeholder="Password" required name="pwd">
+            </div>
+            <div class="pass-link"><a href="#">Forgot password?</a></div>
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" value="Login">
+            </div>
+            <div class="signup-link">Not a member? <a href="">Signup now</a></div>
+          </form>
+          <form class="signup" method="post" action="{% url 'userdata' %}" enctype="multipart/form-data">
+           {% csrf_token %}
+             <div class="field">
+              <input type="text" placeholder="Name" required name="name">
+            </div>
+            <div class="field">
+              <input type="email" placeholder="Email Address" required name="email">
+            </div>
+             <div class="field">
+              <input type="text" placeholder="Mobile" required name="mobile">
+            </div>
+             <div class="field">
+              <input type="file" placeholder="Profile pic" required name="image">
+
+            </div>
+            <div class="field">
+              <input type="password" placeholder="Password" required name="pwd">
+            </div>
+            <div class="field">
+              <input type="password" placeholder="Confirm password" required name="cpwd">
+            </div>
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" value="Signup">
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+
+<script src="{% static 'userlog/js/user.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  {% if messages %}
+      {% for i in messages %}
+        {% if i.tags == 'warning' %}
+        <script>
+        swal('{{i}}','', 'warning');
+        </script>
+        {% elif i.tags == 'error' %}
+        <script>
+        swal('{{i}}','', 'error');
+        </script>
+        {% else %}
+       <script>
+        swal('{{i}}','', 'success');
+        </script>
+        {% endif %}
+    {% endfor %}
+  {% endif %}
+</body>
+</html>
